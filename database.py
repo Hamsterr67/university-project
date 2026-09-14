@@ -51,3 +51,15 @@ def init_database():
 
 if __name__ == "__main__":
     init_database()
+
+def add_student(last_name, first_name, student_card, group_name, phone=None):
+    """Добавляет нового студента в базу данных."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+    INSERT INTO students (last_name, first_name, student_card, group_name, phone)
+    VALUES (?, ?, ?, ?, ?)
+    ''', (last_name, first_name, student_card, group_name, phone))
+    conn.commit()
+    conn.close()
+    print(f"Студент {last_name} {first_name} успешно добавлен.")
